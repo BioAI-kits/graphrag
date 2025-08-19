@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Relationship Information</title>
+
+  <!-- 引入谷歌字体 Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== 全局 CSS 变量 ===== */
+    :root {
+      --primary: #4f46e5;        /* 主色 */
+      --primary-light: #e0e7ff;  /* 浅主色 */
+      --bg: #f9fafb;             /* 页面背景色 */
+      --surface: #ffffff;        /* 容器背景色 */
+      --text: #111827;           /* 文字主色 */
+      --text-secondary: #6b7280; /* 次要文字颜色 */
+      --border: #e5e7eb;         /* 边框颜色 */
+      --radius: 12px;            /* 圆角 */
+      --shadow: 0 4px 16px rgba(0,0,0,.05); /* 阴影 */
+      --empty-color: #9ca3af;    /* 空值颜色 */
+    }
+
+    /* ===== 基本重置 ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ===== 卡片容器 ===== */
+    .wrapper {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* ===== 标题 ===== */
+    h1 {
+      text-align: center;
+      padding: 24px 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+
+    /* ===== 表格 ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      text-align: left;
+      background: #f3f4f6;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    tbody tr:nth-child(odd) { background: #fafafa; }     /* 斑马纹 odd 行 */
+    tbody tr:hover { background: var(--primary-light); transition: .2s; } /* hover 高亮 */
+
+    tr:last-child td { border-bottom: none; }
+
+    /* ===== 数组内容样式 ===== */
+    .array-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .array-item {
+      background-color: var(--primary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 0.8em;
+      position: relative;
+      cursor: default;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 90px;
+      transition: all 0.3s ease;
+    }
+
+    .array-item:hover {
+      max-width: 500px;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    /* ===== 文本内容样式 ===== */
+    .text-content {
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 8px;
+      background-color: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    /* ===== 空值样式 ===== */
+    .empty-value {
+      color: var(--empty-color);
+      font-style: italic;
+    }
+
+    /* ===== 响应式设计 ===== */
+    @media (max-width: 600px) {
+      body { padding: 20px 12px; }
+
+      .wrapper { border-radius: 8px; }
+
+      h1 { padding: 18px 12px; font-size: 1.2rem; }
+
+      th, td {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+
+      .array-item {
+        max-width: 70px;
+        padding: 3px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Relationship Information</h1>
+
+    <table>
+      <thead>
+        <tr><th>Attribute</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Source</td>
+          <td>
+            {% if data.source %}
+              {{ data.source }}
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Target</td>
+          <td>
+            {% if data.target %}
+              {{ data.target }}
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Weight</td>
+          <td>
+            {% if data.weight is not none %}
+              {{ data.weight }}
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>
+            {% if data.description %}
+              <div class="text-content">{{ data.description }}</div>
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Description Embedding</td>
+          <td>
+            {% if data.description_embedding %}
+              <div class="text-content">{{ data.description_embedding }}</div>
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Text Unit IDs</td>
+          <td>
+            {% if data.text_unit_ids %}
+              <div class="array-content">
+                {% for id in data.text_unit_ids %}
+                  {% if id is not none %}
+                    <span class="array-item" title="{{ id }}">
+                      {{ id[:5] }}...
+                    </span>
+                  {% else %}
+                    <span class="array-item">(空)</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Document IDs</td>
+          <td>
+            {% if data.document_ids %}
+              <div class="array-content">
+                {% for id in data.document_ids %}
+                  {% if id is not none %}
+                    <span class="array-item" title="{{ id }}">
+                      {{ id[:5] }}...
+                    </span>
+                  {% else %}
+                    <span class="array-item">(空)</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>Attributes</td>
+          <td>
+            {% if data.attributes %}
+              <div class="text-content">{{ data.attributes }}</div>
+            {% else %}
+              <span class="empty-value">(空值)</span>
+            {% endif %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

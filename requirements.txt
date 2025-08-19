@@ -1,0 +1,12 @@
+--index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+uvicorn
+fastapi
+graphrag==2.1.0
+sse_starlette
+langchain==0.1.9
+langchain-community==0.0.25
+langchain-core==0.1.28
+langchain-text-splitters
+protobuf<3.21.0,>=3.20.0
+openpyxl==3.1.5

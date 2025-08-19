@@ -1,0 +1,47 @@
+1. pip install -r  requirements.txt
+2.在template_zh下修改.env
+内容:
+GRAPHRAG_API_KEY=
+GRAPHRAG_API_BASE
+CHAT_MODEL
+chat_model_tokens_per_minute
+chat_model_requests_per_minute
+GRAPHRAG_API_BASE_EMBEDDING
+GRAPHRAG_EMBEDDING_MODEL
+embedding_model_tokens_per_minute
+embedding_model_requests_per_minute
+GRAPHRAG_INPUT_FILE_TYPE=text
+
+在settings.yaml 修改实体类型
+  - organization  # 组织机构
+  - person # 人物
+  - anatomy  # 解剖结构
+  - injury # 损伤与病名
+  - symptom # 症状/体征
+  - syndrome # 辨证分型
+  - treatment # 治疗方法
+  - herb # 单味中药
+  - formula # 方剂/复方
+  - acupoint # 穴位
+  - equipment # 器械/材料
+
+3.在项目同一级下创建input_files目录 把txt文件放在里面
+
+4. 索引: python index.py --root ./  --input ../input_files --lang chinese
+
+5. 查询: graphrag query --root ./ --query "这本书是哪些老师共同编撰的?" --method local
+
+6. 在scripts下执行 1.切换对话模型辅助+一键启动.py 选择模型 配置好api设置 启动服务
+
+7. 下载cherry studio(https://www.cherry-ai.com/)
+   或者 chatbox客户端网页版都可以(https://web.chatboxai.app/)
+   配置api key随便写和
+   模型名称有 "graphrag-local-search"
+            "graphrag-global-search"
+            "graphrag-drift-search"
+            "graphrag-basic-search"
+   一般使用 graphrag-local-search
+   graphrag-global-search:适合回答综合性的问题 但是本项目用不了 我一度怀疑graphrag的版本有问题 但是测试好几次都查不出来 暂时不知原因
+   graphrag-drift-search:一种结合本地与全局搜索的方法
+   graphrag-basic-search:一种基于关键词的搜索方法
+
